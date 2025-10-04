@@ -109,7 +109,7 @@ submitBtn.addEventListener("click", () => {
   });
 
   // Display score
-  scoreElement.innerText = `Your score is ${score} out of ${questions.length}`;
+  scoreElement.innerText = `Your score is ${score} out of ${questions.length}.`;
 
   // Save to localStorage
   localStorage.setItem("score", score);
