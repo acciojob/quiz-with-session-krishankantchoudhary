@@ -1,15 +1,46 @@
-// Get references
+// -------------------------
+// QUESTIONS
+// -------------------------
+const questions = [
+  {
+    question: "What is the capital of France?",
+    choices: ["Paris", "London", "Berlin", "Madrid"],
+    answer: "Paris",
+  },
+  {
+    question: "What is the highest mountain in the world?",
+    choices: ["Everest", "Kilimanjaro", "Denali", "Matterhorn"],
+    answer: "Everest",
+  },
+  {
+    question: "What is the largest country by area?",
+    choices: ["Russia", "China", "Canada", "United States"],
+    answer: "Russia",
+  },
+  {
+    question: "Which is the largest planet in our solar system?",
+    choices: ["Earth", "Jupiter", "Mars", "Saturn"],
+    answer: "Jupiter",
+  },
+  {
+    question: "What is the capital of Canada?",
+    choices: ["Toronto", "Montreal", "Vancouver", "Ottawa"],
+    answer: "Ottawa",
+  },
+];
+
+// -------------------------
+// REFERENCES
+// -------------------------
 const questionsElement = document.getElementById("questions");
 const submitBtn = document.getElementById("submit");
 const scoreElement = document.getElementById("score");
 
-// Questions are already defined in HTML file above 👆
-
-// Load saved progress from sessionStorage (if any)
+// Load saved progress + score
 let savedProgress = JSON.parse(sessionStorage.getItem("progress")) || {};
 let savedScore = localStorage.getItem("score");
 
-// If user has already submitted, display score from localStorage
+// If already submitted, show last score
 if (savedScore !== null) {
   scoreElement.innerText = `Your score is ${savedScore} out of ${questions.length}`;
 }
@@ -18,7 +49,7 @@ if (savedScore !== null) {
 // RENDER QUESTIONS
 // -------------------------
 function renderQuestions() {
-  questionsElement.innerHTML = ""; // clear before rendering
+  questionsElement.innerHTML = "";
 
   questions.forEach((q, i) => {
     const questionDiv = document.createElement("div");
@@ -36,12 +67,12 @@ function renderQuestions() {
       choiceElement.name = `question-${i}`;
       choiceElement.value = choice;
 
-      // Restore from session storage
+      // Restore selection from sessionStorage
       if (savedProgress[i] === choice) {
         choiceElement.checked = true;
       }
 
-      // Save answer to session storage on selection
+      // Save selection on change
       choiceElement.addEventListener("change", () => {
         savedProgress[i] = choice;
         sessionStorage.setItem("progress", JSON.stringify(savedProgress));
