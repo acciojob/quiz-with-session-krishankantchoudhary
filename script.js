@@ -70,12 +70,18 @@ function renderQuestions() {
       // Restore selection from sessionStorage
       if (savedProgress[i] === choice) {
         choiceElement.checked = true;
+        choiceElement.setAttribute("checked", "true"); // Cypress expects this
       }
 
       // Save selection on change
       choiceElement.addEventListener("change", () => {
         savedProgress[i] = choice;
         sessionStorage.setItem("progress", JSON.stringify(savedProgress));
+
+        // Ensure only one option has the attribute
+        const groupRadios = document.querySelectorAll(`input[name="question-${i}"]`);
+        groupRadios.forEach(r => r.removeAttribute("checked"));
+        choiceElement.setAttribute("checked", "true");
       });
 
       label.appendChild(choiceElement);
